@@ -2,7 +2,7 @@
 
 function joinChk(){
     var frm = document.querySelector('#frm');
-    if(frm.uid.value.length <= 5 || frm.uid.value.length >= 20){ //frm.uid.value는 String 값
+    if(frm.uid.value.length < 5 || frm.uid.value.length > 20){ //frm.uid.value는 String 값
         alert('아이디를 5~20자 사이로 작성해 주세요.');
         return false;
     } else if(frm.upw.value.length < 5){

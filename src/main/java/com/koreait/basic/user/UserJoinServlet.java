@@ -1,6 +1,7 @@
 package com.koreait.basic.user;
 
 import com.koreait.basic.Utils;
+import com.koreait.basic.dao.UserDAO;
 import com.koreait.basic.user.model.UserEntity;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -35,6 +36,11 @@ public class UserJoinServlet extends HttpServlet {
         entity.setGender(gender);
 
         System.out.println(entity);
+
+        int result = UserDAO.join(entity);
+
+        res.sendRedirect("/user/login");
+
 
 
 
