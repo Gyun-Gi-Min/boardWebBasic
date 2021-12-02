@@ -1,10 +1,19 @@
 package com.koreait.basic;
 
+import com.koreait.basic.board.model.BoardVO;
+import com.koreait.basic.user.model.UserEntity;
+import com.mysql.cj.protocol.Resultset;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.xml.transform.Result;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.List;
 
 public class Utils {
     public static void displayView(String title, String page,
@@ -31,5 +40,21 @@ public class Utils {
         }
         return defVal;
     }
+
+    public static UserEntity getLoginUser(HttpServletRequest req){
+        HttpSession hs =req.getSession();
+        return (UserEntity) hs.getAttribute("loginUser");
+    }
+
+    public static int getLoginUserPk(HttpServletRequest req){
+        UserEntity loginUser = getLoginUser(req);
+        if(loginUser==null){
+            return 0;
+        }
+        return loginUser.getIuser();
+    }
+
+
+
 
 }
