@@ -22,12 +22,14 @@
             <c:if test="${sessionScope.loginUser !=null}">
                 <li><a href="/board/regmod">글쓰기</a></li>
                 <li><a href="/user/logout">로그아웃</a></li>
+                <div>${sessionScope.loginUser.nm}(${sessionScope.loginUser.uid})님 환영합니다.</div>
             </c:if>
             <c:if test="${sessionScope.loginUser == null}">
                 <li><a href="/user/login">로그인</a></li>
                 <li><a href="/user/join">회원가입</a></li>
             </c:if>
         </ul>
+
     </div>
     <div class="body"><jsp:include page="/WEB-INF/view/${requestScope.page}.jsp"></jsp:include></div>
     <div class="footer">

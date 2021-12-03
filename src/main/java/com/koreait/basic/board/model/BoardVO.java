@@ -3,6 +3,7 @@ package com.koreait.basic.board.model;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 //VO는 세터가 없다. 게터만... ㅓ
 @Getter

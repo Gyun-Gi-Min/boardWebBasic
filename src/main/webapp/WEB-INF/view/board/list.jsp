@@ -6,7 +6,7 @@
             <tr>
                 <th>no</th>
                 <th>title</th>
-                <th>hits</th>
+                <th>hit</th>
                 <th>writer</th>
                 <th>reg-datetime</th>
             </tr>
