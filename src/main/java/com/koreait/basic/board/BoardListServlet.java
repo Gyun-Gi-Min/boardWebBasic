@@ -19,14 +19,19 @@ public class BoardListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-        BoardDTO param = new BoardDTO();
+        int searchType = Utils.getParamaterInt(req,"searchType",0);
+        String searchText =req.getParameter("searchText");
         int page = Utils.getParamaterInt(req,"page",1);
+        //searchText가 null이나 빈칸이면 검색기능되고, 있다면 안되도록.
+        BoardDTO param = new BoardDTO();
         param.setRowCnt(5); //몇줄씩 볼껀가?
         param.setPage(page);
+        param.setSearchText(searchText);
+        param.setSearchType(searchType);
 
         int maxPageNum = BoardDAO.getMaxPageNum(param);
-        req.setAttribute("page",page);
 
+        req.setAttribute("page",page);
         req.setAttribute("maxPageNum",maxPageNum);
         req.setAttribute("list",BoardDAO.selBoardList(param));
 

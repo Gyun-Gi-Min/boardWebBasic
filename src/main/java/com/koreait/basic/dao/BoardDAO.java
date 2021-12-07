@@ -106,11 +106,36 @@ public class BoardDAO {
         return null;
     }
 
+    private static String getSearchWhereString(BoardDTO param){
+        if(param.getSearchText() != null && !"".equals(param.getSearchText())){
+            switch (param.getSearchType()){
+                case 1://제목
+                    return String.format(" WHERE A.title LIKE '%%%s%%'",param.getSearchText()) ;
+                    //%%해야 % 나옴
+                case 2://내용
+                    return String.format(" WHERE A.ctnt LIKE '%%%s%%'",param.getSearchText()) ;
+                case 3://제목+내용
+                    return String.format(" WHERE A.title LIKE '%%%s%%' OR A.ctnt LIKE '%%%s%%'",param.getSearchText(),param.getSearchText()) ;
+                case 4://글쓴이
+                    return String.format(" WHERE B.nm LIKE '%%%s%%'",param.getSearchText()) ;
+                case 5://전체
+                    return String.format(" WHERE A.title LIKE '%%%s%%' OR A.ctnt LIKE '%%%s%%' OR B.nm LIKE '%%%s%%'",
+                            param.getSearchText(),param.getSearchText(),param.getSearchText()) ;
+            }
+        }
+        return "";
+    }
+
     public static int getMaxPageNum(BoardDTO param){
         Connection con =null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = " SELECT ceil(COUNT(*) / ?) from t_board ";
+        String sql = " SELECT ceil(COUNT(*) / ?) from t_board A " +
+                " INNER JOIN t_user B " +
+                " ON A.writer = B.iuser ";
+
+        sql += getSearchWhereString(param);
+
         try{
             con = DbUtils.getCon();
             ps = con.prepareStatement(sql);
@@ -136,13 +161,14 @@ public class BoardDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String sql = "SELECT " +
-                "A.iboard, A.title, A.writer, A.hit, A.rdt, B.nm AS WriterNm" +
+        String sql = " SELECT " +
+                " A.iboard, A.title, A.writer, A.hit, A.rdt, B.nm AS WriterNm " +
                 " FROM t_board A" +
                 " INNER JOIN t_user B " +
-                " ON A.writer = B.iuser " +
-                " ORDER BY A.iboard DESC " +
-                " LIMIT ?,? ";
+                " ON A.writer = B.iuser ";
+        sql += getSearchWhereString(param);
+        sql += " ORDER BY A.iboard DESC LIMIT ?,? ";
+
          //시작인덱스는 몇부터? 몇줄씩 보여질껀가
 
         try {

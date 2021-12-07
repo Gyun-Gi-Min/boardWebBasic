@@ -11,6 +11,24 @@ public class BoardDTO {
     private int page; //페이지
     private int startIdx; // 시작인덱스
     private int rowCnt; //몇줄표시
+    private int searchType;
+    private String searchText;
+
+    public int getSearchType() {
+        return searchType;
+    }
+
+    public void setSearchType(int searchType) {
+        this.searchType = searchType;
+    }
+
+    public String getSearchText() {
+        return searchText;
+    }
+
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
+    }
 
     public int getIboard() {
         return iboard;

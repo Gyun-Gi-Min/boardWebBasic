@@ -6,6 +6,7 @@ a{text-decoration: none; color:#000}
 table,td,th{border:1px solid #494848; border-collapse: collapse}
 td,th{padding: 5px;}
 .container{display: grid; grid-template-rows: 200px 1fr 100px; min-height: 100vh;}
+.body{padding: 10px 50px; text-align: center;}
 .header{ background-color: #fab4b4; padding: 10px 30px;}
 .topMenu{ display: flex;}
 .topMenu li a{color : #fff;}
