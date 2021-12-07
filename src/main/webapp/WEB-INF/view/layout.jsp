@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${requestScope.title}</title>
-    <link rel="stylesheet" href="/res/css/common.css">
+    <link rel="stylesheet" href="/res/css/common.css?ver=2">
 </head>
 <body>
 <div class="container">
@@ -36,7 +36,17 @@
         footer
     </div>
 </div>
+    <c:if test="${requestScope.err != null}">
+        <script>
+            var body = document.querySelector('body');
+            body.onload = function() {
+                setTimeout(function() {
+                    alert('<c:out value="${requestScope.err}"/>');
+                }, 300);
+            };
+        </script>
 
+    </c:if>
 
 </body>
 </html>

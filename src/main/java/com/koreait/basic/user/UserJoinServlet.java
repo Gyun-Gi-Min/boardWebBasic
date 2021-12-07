@@ -19,6 +19,7 @@ public class UserJoinServlet extends HttpServlet {
         Utils.displayView("회원가입","user/join",req,res);
     }
 
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         String uid = req.getParameter("uid");
@@ -41,7 +42,15 @@ public class UserJoinServlet extends HttpServlet {
 
         res.sendRedirect("/user/login");
 
-
+        switch (result){
+            case 1:
+                res.sendRedirect("/user/login");
+                break;
+            default:
+                req.setAttribute("err","회원가입에 실패하였엽습니다..");
+                doGet(req,res);
+                break;
+        }
 
 
 

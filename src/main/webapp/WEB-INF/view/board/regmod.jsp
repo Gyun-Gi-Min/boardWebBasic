@@ -13,5 +13,10 @@
         </div>
     </form>
 
-
 </div>
+
+<c:if test="${err != null}">
+    <script>
+        alert('<c:out value="${err}"/>');
+    </script>
+</c:if>

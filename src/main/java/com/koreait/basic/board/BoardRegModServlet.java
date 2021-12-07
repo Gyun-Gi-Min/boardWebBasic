@@ -28,13 +28,12 @@ public class BoardRegModServlet extends HttpServlet {
         if(iboard > 0){ //수정
             title="글수정";
 
-            BoardDTO dto =new BoardDTO();
-            dto.setIboard(iboard);
-
-            req.setAttribute("aaa",BoardDAO.selDetail(dto));
-
+            if(req.getAttribute("aaa") ==null){
+                BoardDTO dto =new BoardDTO();
+                dto.setIboard(iboard);
+                req.setAttribute("aaa",BoardDAO.selDetail(dto));
+            }
         }
-
         Utils.displayView(title,"board/regmod",req,res);
     }
 
@@ -72,6 +71,12 @@ public class BoardRegModServlet extends HttpServlet {
                     res.sendRedirect("/board/detail?iboard=" + entity.getIboard());
                     return;
                 }
+                break;
+
+            default:
+                req.setAttribute("err","등록/수정에 실패했습니다.");
+                req.setAttribute("aaa",entity);
+                doGet(req,res);
                 break;
         }
 
