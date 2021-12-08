@@ -23,12 +23,14 @@ public class BoardListServlet extends HttpServlet {
         String searchText =req.getParameter("searchText");
         int page = Utils.getParamaterInt(req,"page",1);
         //searchText가 null이나 빈칸이면 검색기능되고, 있다면 안되도록.
+        int rowCnt = Utils.getParamaterInt(req,"rowCnt",5);
+
         BoardDTO param = new BoardDTO();
         param.setRowCnt(5); //몇줄씩 볼껀가?
         param.setPage(page);
         param.setSearchText(searchText);
         param.setSearchType(searchType);
-
+        param.setRowCnt(rowCnt);
         int maxPageNum = BoardDAO.getMaxPageNum(param);
 
         req.setAttribute("page",page);

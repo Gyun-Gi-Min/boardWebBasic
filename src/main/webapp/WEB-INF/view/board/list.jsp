@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="/res/css/board/list.css?ver=4">
 
 <div>
-    <form action="/board/list" method="get">
+    <form action="/board/list" method="get" id="searchFrm">
         <div>
             <select name="searchType">
                 <option value="1" ${param.searchType == 1 ? 'selected' : ''}>제목</option>
@@ -16,6 +16,11 @@
             </select>
             <input type="search" name="searchText" value="${param.searchText}">
             <input type="submit" value="검색">
+            <select name="rowCnt">
+                <c:forEach var="cnt" begin="5" end="30" step="5">
+                    <option value="${cnt}" ${param.rowCnt == cnt ? 'selected' : ''}>${cnt}개</option>
+                </c:forEach>
+            </select>
         </div>
     </form>
 </div>
@@ -37,12 +42,12 @@
 
                 <c:forEach items="${requestScope.list}" var="item">
                     <c:set var = "eachTitle" value="${fn:replace(fn:replace(item.title, '>' , '&gt'),'<' ,'&lt;')}"/>
-                    <c:if test="${param.searchType == 1 || param.searchType== 3 || param.searchType== 5}">
+                    <c:if test="${param.searchText != null && (param.searchType == 1 || param.searchType== 3 || param.searchType== 5)}">
                         <c:set var="eachTitle" value="${fn:replace(eachTitle, param.searchText, '<mark>' += param.searchText += '</mark>')}"/>
                     </c:if>
 
                     <c:set var = "eachWriterNm" value="${item.writerNm}"/> <!--이름엔 장난칠수없음 회원가입 단계에서 막힘-->
-                    <c:if test="${param.searchType == 4 || param.searchType == 5}">
+                    <c:if test="${param.searchText != null && (param.searchType == 4 || param.searchType == 5)}">
                         <c:set var="eachWriterNm" value="${fn:replace(eachWriterNm, param.searchText, '<mark>' += param.searchText += '</mark>' )}"/>
                     </c:if>
                     <tr class="record" onclick="moveToDetail(${item.iboard})">
@@ -63,10 +68,9 @@
         </div>
         <div class="pageContainer">
             <c:set var = "selectedPage" value="${param.page == null ? 1 :param.page}"/>
-            <c:forEach var= "i" begin="1" end="${requestScope.maxPageNum}" >
-                <a href="/board/list?page=${i}&searchType=${param.searchType}&searchText=${param.searchText}"><span class="${selectedPage == i ? 'selected' : ''}"><c:out value="${i}"/></span></a>
+            <c:forEach var= "i" begin="1" end="${requestScope.maxPageNum}" ><a href="/board/list?page=${i}&searchType=${param.searchType}&searchText=${param.searchText}&rowCnt=${param.rowCnt}"><span class="${selectedPage == i ? 'selected' : ''}"><c:out value="${i}"/></span></a>
             </c:forEach>
         </div>
     </c:otherwise>
 </c:choose>
-<script src="/res/js/board/list.js"></script>
+<script src="/res/js/board/list.js?ver=1"></script>
