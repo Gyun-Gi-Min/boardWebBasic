@@ -40,7 +40,7 @@ public class Utils {
             return Integer.parseInt(val);
 
         }catch(Exception e){
-            e.printStackTrace();
+
         }
         return defVal;
     }

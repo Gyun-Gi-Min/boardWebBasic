@@ -39,7 +39,7 @@ public class BoardDetailServlet extends HttpServlet {
             BoardDAO.updBoardHitUp(dto);
         }
 
-        Utils.displayView(data.getTitle(),"board/detail",req,res);
+        Utils.displayView("상세정보","board/detail",req,res);
     }
 
     @Override
