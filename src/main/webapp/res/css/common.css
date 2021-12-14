@@ -15,8 +15,16 @@ td,th{padding: 5px;}
 
 .body{padding: 10px 50px; text-align: center;}
 
+
+.subContainer{ height:100%; display:grid; grid-template-columns: 120px 1fr; }
+.subContainer .subMenus{ border-right: 1px solid #868484;}
+.subContainer .subBody{padding:0 10px;}
+
+
 .fav{color : #fab4b4; font-size: 20px}
 .fav i:hover{cursor: pointer}
+
+
 
 
 .footer{background-color: #4b4b4b; color: #fff}

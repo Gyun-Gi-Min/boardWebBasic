@@ -17,6 +17,8 @@ public class BoardVO {
     private int hit;
     private String rdt;
     private String mdt;
+
     //-----추가목록-----
     private String WriterNm;
+    private int cnt;
 }

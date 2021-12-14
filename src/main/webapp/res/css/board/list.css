@@ -12,11 +12,10 @@ body{
 }
 body.dark-theme {
     color: #ffffff;
-    background: #121212;
+    background: #1e1f21;
 }
 .dark-theme #boardTable tr:not(:first-child):hover{
     background-color: brown; cursor: pointer;
 }
-
 .dark-theme span{color: #4b4b4b; }
 .dark-theme .selected{color: white; font-weight: bold;}

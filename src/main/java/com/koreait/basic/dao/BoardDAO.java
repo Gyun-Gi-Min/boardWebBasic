@@ -13,9 +13,11 @@ import java.util.List;
 
 public class BoardDAO {
     public static int insBoardWithPk(BoardEntity entity) {
+        //글쓰는건데  iboard값을 가져오는 글쓰는글. iboard 없으면 등록 있으면 수정.
         int result = 0;
         Connection con = null;
         PreparedStatement ps = null;
+
         ResultSet rs = null;
         String sql = "INSERT INTO t_board(title, ctnt, writer)" +
                 "VALUES (?, ?, ?)";
@@ -26,6 +28,7 @@ public class BoardDAO {
             ps.setString(2, entity.getCtnt());
             ps.setInt(3, entity.getWriter());
             result = ps.executeUpdate();
+
             rs = ps.getGeneratedKeys();
             if(rs.next()) {
                 int iboard = rs.getInt(1);

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardRankDAO {
+
+    //조회수
     public static List<BoardVO> selBoardHitsRankList(){
         List<BoardVO> list = new ArrayList();
         Connection con = null;
@@ -17,7 +19,7 @@ public class BoardRankDAO {
         ResultSet rs =null;
         //조회수가 내림차순으로 10개.
         //hits값이 0인건 제외.
-        String sql = " SELECT A.iboard, A.title, A.writer, A.hit, A.rdt, B.nm AS WriterNm" +
+        String sql = " SELECT A.iboard, A.title, A.writer, A.hit , A.rdt, B.nm AS WriterNm" +
                 " FROM t_board A " +
                 " INNER JOIN t_user B " +
                 " ON A.writer = B.iuser " +
@@ -33,14 +35,14 @@ public class BoardRankDAO {
                 int iboard = rs.getInt("iboard");
                 String title = rs.getString("title");
                 int writer = rs.getInt("writer");
-                int hit = rs.getInt("hit");
+                int cnt = rs.getInt("hit");
                 String rdt = rs.getString("rdt");
                 String WriterNm = rs.getString("WriterNm");
                 BoardVO vo = BoardVO.builder()
                         .iboard(iboard)
                         .title(title)
                         .writer(writer)
-                        .hit(hit)
+                        .cnt(cnt)
                         .rdt(rdt)
                         .WriterNm(WriterNm)
                         .build();
@@ -54,7 +56,105 @@ public class BoardRankDAO {
         }
         return list;
     }
+    //댓글수 10
+    public static List<BoardVO> selBoardCmtRankList(){
+        List<BoardVO> list = new ArrayList();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs =null;
+        String sql = " SELECT A.iboard, A.title, A.writer, A.rdt, B.nm AS writerNm " +
+                ", C.cnt " +
+                " FROM t_board A " +
+                " INNER JOIN t_user B" +
+                " ON A.writer = B.iuser" +
+                " INNER JOIN" +
+                " (" +
+                " SELECT iboard, COUNT(icmt) AS cnt " +
+                " FROM t_board_cmt " +
+                " GROUP BY iboard " +
+                " ) C " +
+                " ON A.iboard = C.iboard " +
+                " ORDER BY C.cnt DESC " +
+                " LIMIT 10 ";
+
+        try{
+            con = DbUtils.getCon();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                int iboard = rs.getInt("iboard");
+                String title = rs.getString("title");
+                int writer = rs.getInt("writer");
+                String rdt = rs.getString("rdt");
+                int cnt = rs.getInt("cnt");
+                String WriterNm = rs.getString("WriterNm");
+                BoardVO vo = BoardVO.builder()
+                        .iboard(iboard)
+                        .title(title)
+                        .writer(writer)
+                        .cnt(cnt)
+                        .rdt(rdt)
+                        .WriterNm(WriterNm)
+                        .build();
+                list.add(vo);
+            }
+        }catch (Exception e){
+        e.printStackTrace();
+        }finally {
+            DbUtils.close(con,ps,rs);
+        }
+        return list;
+    }
+    //좋아요 10
+    public static List<BoardVO> selBoardHeartRankList(){
+        List<BoardVO> list = new ArrayList();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs =null;
+
+        String sql = " SELECT A.iboard, A.title, A.writer, A.rdt, B.nm AS writerNm " +
+                ", C.cnt " +
+                " FROM t_board A " +
+                " INNER JOIN t_user B" +
+                " ON A.writer = B.iuser" +
+                " INNER JOIN" +
+                " (" +
+                " SELECT iboard, COUNT(iuser) AS cnt " +
+                " FROM t_board_heart " +
+                " GROUP BY iboard " +
+                " )C " +
+                " ON A.iboard = C.iboard " +
+                " ORDER BY C.cnt DESC " +
+                " LIMIT 10 ";
+
+        try{
+            con = DbUtils.getCon();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                int iboard = rs.getInt("iboard");
+                String title = rs.getString("title");
+                int writer = rs.getInt("writer");
+                String rdt = rs.getString("rdt");
+                int cnt = rs.getInt("cnt");
+                String WriterNm = rs.getString("WriterNm");
+                BoardVO vo = BoardVO.builder()
+                        .iboard(iboard)
+                        .title(title)
+                        .writer(writer)
+                        .cnt(cnt)
+                        .rdt(rdt)
+                        .WriterNm(WriterNm)
+                        .build();
+                list.add(vo);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DbUtils.close(con,ps,rs);
+        }
 
 
-
+        return list;
+    }
 }

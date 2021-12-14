@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="boardWebBasic" />
+        <module name="boardWebBasic3" />
       </profile>
     </annotationProcessing>
   </component>

@@ -9,6 +9,7 @@
     <title>${requestScope.title}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/res/css/common.css?ver=2">
+
 </head>
 <body>
 
@@ -21,9 +22,13 @@
         -->
         <ul class="topMenu">
             <li><a href="/board/list">게시판</a></li>
-            <li><a href="/board/rank?type=1">조회수 Top 10</a></li>
+            <li><a href="/board/rank?type=1">조회수 TOP 10</a></li>
+            <li><a href="/board/rank?type=2">댓글수 TOP 10 </a></li>
+            <li><a href="/board/rank?type=3">좋아요 TOP 10 </a></li>
+
             <c:if test="${sessionScope.loginUser !=null}"> <!--로그인 했을 경우-->
                 <li><a href="/board/regmod">글쓰기</a></li>
+                <li><a href="/user/profile">마이페이지</a></li>
                 <li><a href="/user/logout">로그아웃</a></li>
                 <div>${sessionScope.loginUser.nm}(${sessionScope.loginUser.uid})님 환영합니다.</div>
             </c:if>
