@@ -4,9 +4,12 @@
 
 <link rel="stylesheet" href="/res/css/board/list.css?ver=4">
 
+
+
 <div>
     <form action="/board/list" method="get" id="searchFrm">
         <div>
+
             <select name="searchType">
                 <option value="1" ${param.searchType == 1 ? 'selected' : ''}>제목</option>
                 <option value="2" ${param.searchType == 2 ? 'selected' : ''}>내용</option>
@@ -56,15 +59,18 @@
                         내용에 자바스크립트 문법을 적었을때 작동하지 않게 함.
                         c:out 없을때 자바스크립트를 적으면 출력값 나옴.
                         -->
-                        <td>${item.iboard}</td>
-                        <td>${eachTitle}</td>
-                        <td>${item.hit}</td>
-                        <td>${eachWriterNm}</td>
-                        <td>${item.rdt}</td>
+                        <div>
+                            <td>${item.iboard}</td>
+                            <td>${eachTitle}</td>
+                            <td>${item.hit}</td>
+                            <td>${eachWriterNm}</td>
+                            <td>${item.rdt}</td>
+                        </div>
+
                     </tr>
                 </c:forEach>
             </table>
-
+            <button class="btn-toggle">다크모드로 바꾸기</button>
         </div>
         <div class="pageContainer">
             <c:set var = "selectedPage" value="${param.page == null ? 1 :param.page}"/>
@@ -73,4 +79,4 @@
         </div>
     </c:otherwise>
 </c:choose>
-<script src="/res/js/board/list.js?ver=1"></script>
+<script src="/res/js/board/list.js?ver=2"></script>

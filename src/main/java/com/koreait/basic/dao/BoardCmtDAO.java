@@ -35,7 +35,6 @@ public class BoardCmtDAO {
         return 0;
     }
 
-
     public static List<BoardCmtVO> selBoardCmtList(BoardCmtDTO param){
         List<BoardCmtVO> list = new ArrayList();
         Connection con = null;
@@ -63,9 +62,7 @@ public class BoardCmtDAO {
                         .writerNm(rs.getString("writerNm"))
                         .build();
                 list.add(vo);
-
             }
-
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -78,7 +75,7 @@ public class BoardCmtDAO {
         Connection con =null;
         PreparedStatement ps = null;
         String sql = " UPDATE t_board_cmt SET ctnt=? WHERE icmt = ? AND writer = ? ";
-
+        // iboard 값은 고정이니 불러올 필요가 없쥐~
         try{
             con = DbUtils.getCon();
             ps = con.prepareStatement(sql);
@@ -93,10 +90,6 @@ public class BoardCmtDAO {
         }
         return 0;
     }
-
-
-
-
 
     public static int delBoardCmt(BoardCmtEntity entity){
         Connection con = null;

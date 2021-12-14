@@ -7,30 +7,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${requestScope.title}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/res/css/common.css?ver=2">
 </head>
 <body>
+
 <div class="container">
     <div class="header">
+
         <!--
         로그아웃 상태 -> 로그인 ,회원가입
         로그인 상태 -> 로그아웃
         -->
         <ul class="topMenu">
             <li><a href="/board/list">게시판</a></li>
-
-            <c:if test="${sessionScope.loginUser !=null}">
+            <li><a href="/board/rank?type=1">조회수 Top 10</a></li>
+            <c:if test="${sessionScope.loginUser !=null}"> <!--로그인 했을 경우-->
                 <li><a href="/board/regmod">글쓰기</a></li>
                 <li><a href="/user/logout">로그아웃</a></li>
                 <div>${sessionScope.loginUser.nm}(${sessionScope.loginUser.uid})님 환영합니다.</div>
             </c:if>
-            <c:if test="${sessionScope.loginUser == null}">
+            <c:if test="${sessionScope.loginUser == null}"> <!--로그인 안 했을 경우-->
                 <li><a href="/user/login">로그인</a></li>
                 <li><a href="/user/join">회원가입</a></li>
             </c:if>
+
         </ul>
 
     </div>
+
     <div class="body"><jsp:include page="/WEB-INF/view/${requestScope.page}.jsp"></jsp:include></div>
     <div class="footer">
         footer

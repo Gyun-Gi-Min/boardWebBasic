@@ -16,6 +16,13 @@ import java.io.IOException;
 public class UserJoinServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
+        String aa = "가나다라";
+        String aaaa = Utils.replaceAll(aa);
+        System.out.println(aaaa);
+
+
+
         Utils.displayView("회원가입","user/join",req,res);
     }
 

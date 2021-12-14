@@ -1,5 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
+<link rel="stylesheet" href="/res/css/user/join.css">
+
 <div>
+
     <form action = "/user/join" method="post" id="frm" onsubmit="return joinChk();">
         <div><input type="text" name="uid" placeholder="id" required></div>
         <div><input type="password" name="upw" placeholder="password" required></div>

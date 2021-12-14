@@ -18,3 +18,4 @@ function joinChk(){
     }
     return true;
 }
+

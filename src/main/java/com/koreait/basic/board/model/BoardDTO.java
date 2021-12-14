@@ -13,6 +13,7 @@ public class BoardDTO {
     private int rowCnt; //몇줄표시
     private int searchType;
     private String searchText;
+    private int loginUserPk;
 
     public int getSearchType() {
         return searchType;

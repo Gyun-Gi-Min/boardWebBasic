@@ -2,6 +2,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" href="/res/css/board/detail.css">
 <div>
+    <c:if test="${sessionScope.loginUser != null}">
+        <div class="fav">
+            <c:choose>
+                <c:when test="${requestScope.isHeart == 1}">
+                    <a href="/board/heart?proc=2&iboard=${requestScope.aaa.iboard}"><i class="fas fa-thumbs-up"></i></a>
+                </c:when>
+                <c:otherwise>
+                    <a href="/board/heart?proc=1&iboard=${requestScope.aaa.iboard}"><i class="far fa-thumbs-up"></i></a>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </c:if>
+
+
 
     <c:if test="${sessionScope.loginUser.iuser == requestScope.aaa.writer}">
         <div>
@@ -15,7 +29,6 @@
         <div>조회수 :<c:out value=" ${requestScope.aaa.hit}"/></div>
         <div>작성자 : <c:out value=" ${requestScope.aaa.writerNm}"/></div>
         <div>등록일시 : <c:out value=" ${requestScope.aaa.rdt}"/></div>
-
     <c:if test="${sessionScope.loginUser != null}">
         <div>
             <form action="/board/cmt/reg" method="post">

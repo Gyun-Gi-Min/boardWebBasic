@@ -2,10 +2,12 @@ package com.koreait.basic.board;
 
 import com.koreait.basic.Utils;
 import com.koreait.basic.board.cmt.model.BoardCmtDTO;
+import com.koreait.basic.board.cmt.model.BoardHearEntity;
 import com.koreait.basic.board.model.BoardDTO;
 import com.koreait.basic.board.model.BoardVO;
 import com.koreait.basic.dao.BoardCmtDAO;
 import com.koreait.basic.dao.BoardDAO;
+import com.koreait.basic.dao.BoardHeartDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,6 +37,14 @@ public class BoardDetailServlet extends HttpServlet {
         req.setAttribute("cmtList", BoardCmtDAO.selBoardCmtList(cmtParam));
 
         int loginUserPk = Utils.getLoginUserPk(req);
+        if(loginUserPk > 0) {//로그인 되어 있어야 되고
+            BoardHearEntity bhParam = new BoardHearEntity();
+            bhParam.setIuser(loginUserPk);
+            bhParam.setIboard(iboard);
+            req.setAttribute("isHeart", BoardHeartDAO.selIsHeart(bhParam));
+            
+        }
+
         if(data.getWriter() != loginUserPk && nohits != 1){//로그인 안되어 있으면 0, 되어있으면  pk
             BoardDAO.updBoardHitUp(dto);
         }

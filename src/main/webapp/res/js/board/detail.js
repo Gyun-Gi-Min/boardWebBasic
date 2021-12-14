@@ -6,7 +6,6 @@ function isDelCmt(iboard, icmt){
 }
 
 
-
 var cmtModContainerElem = document.querySelector('.cmtModContainer');
 
 var btnCancelElem = cmtModContainerElem.querySelector('#btnCancel');

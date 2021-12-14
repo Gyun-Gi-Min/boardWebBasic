@@ -59,6 +59,16 @@ public class Utils {
     }
 
 
+    public static String replaceStr(String str){
+
+
+        return str.replace("가","123").replace("나","45552");
+    }
+    public static String replaceAll(String str1){
+        return replaceStr(str1);
+    }
+
+
 
 
 }
