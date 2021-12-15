@@ -15,4 +15,5 @@ public class UserEntity {
     private String nm;
     private int gender;
     private String rdt;
+    private String profileImg;
 }

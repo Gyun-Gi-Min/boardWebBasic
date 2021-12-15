@@ -53,6 +53,15 @@
                     <c:if test="${param.searchText != null && (param.searchType == 4 || param.searchType == 5)}">
                         <c:set var="eachWriterNm" value="${fn:replace(eachWriterNm, param.searchText, '<mark>' += param.searchText += '</mark>' )}"/>
                     </c:if>
+
+
+
+                    <c:set var="pImg" value="defaultProfile.png"/>
+                    <c:if test="${item.profileImg != null}">
+                        <c:set var="pImg" value="profile/${item.writer}/${item.profileImg}"/>
+                    </c:if>
+
+
                     <tr class="record" onclick="moveToDetail(${item.iboard})">
                         <!--
                         c:out 적는이유 >> 보안때문에.
@@ -63,7 +72,9 @@
                             <td>${item.iboard}</td>
                             <td>${eachTitle}</td>
                             <td>${item.hit}</td>
-                            <td>${eachWriterNm}</td>
+                            <td>${eachWriterNm}<span class="circular--img circular--size40">
+                                <img src="/res/img/${pImg}">
+                            </span></td>
                             <td>${item.rdt}</td>
                         </div>
 

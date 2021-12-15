@@ -9,7 +9,7 @@
 
 
 <c:choose>
-    <c:when test="${fn:length(requestScope.list)==0}">
+    <c:when test="${fn:length(requestScope.list) == 0}">
         <div>랭킹이 없습니다.</div>
     </c:when>
 <c:otherwise>

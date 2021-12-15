@@ -165,7 +165,7 @@ public class BoardDAO {
         ResultSet rs = null;
 
         String sql = " SELECT " +
-                " A.iboard, A.title, A.writer, A.hit, A.rdt, B.nm AS WriterNm " +
+                " A.iboard, A.title, A.writer, A.hit, A.rdt, B.nm AS WriterNm, B.profileImg " +
                 " FROM t_board A" +
                 " INNER JOIN t_user B " +
                 " ON A.writer = B.iuser ";
@@ -187,6 +187,7 @@ public class BoardDAO {
                 int hit = rs.getInt("hit");
                 String rdt = rs.getString("rdt");
                 String WriterNm = rs.getString("WriterNm");
+                String profileImg = rs.getString("profileImg");
                 BoardVO vo = BoardVO.builder()
                         .iboard(iboard)
                         .title(title)
@@ -194,6 +195,7 @@ public class BoardDAO {
                         .hit(hit)
                         .rdt(rdt)
                         .WriterNm(WriterNm)
+                        .profileImg(profileImg)
                         .build();
                 list.add(vo);
             }

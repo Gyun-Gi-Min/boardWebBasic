@@ -35,7 +35,8 @@ public class BoardRankDAO {
                 int iboard = rs.getInt("iboard");
                 String title = rs.getString("title");
                 int writer = rs.getInt("writer");
-                int cnt = rs.getInt("hit");
+                int cnt = rs.getInt("hit"); //여기선 hit컬럼에서 가져오는거.
+                //cnt 라고 적혀있지만 select에선 hit가져오므로 hit에 넣을 내용. 좋아요,댓글 때문에 이름 바꿈.
                 String rdt = rs.getString("rdt");
                 String WriterNm = rs.getString("WriterNm");
                 BoardVO vo = BoardVO.builder()

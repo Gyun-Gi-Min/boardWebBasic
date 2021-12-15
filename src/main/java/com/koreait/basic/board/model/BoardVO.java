@@ -21,4 +21,5 @@ public class BoardVO {
     //-----추가목록-----
     private String WriterNm;
     private int cnt;
+    private String profileImg;
 }
