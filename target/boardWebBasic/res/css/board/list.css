@@ -1,0 +1,21 @@
+#boardTable tr:not(:first-child):hover{
+    background-color: #efefef; cursor:pointer;
+}
+.selected{color: chocolate; font-weight: bold;}
+
+.pageContainer{padding: 10px 50px; display:flex; justify-content: center;}
+.pageContainer > a:not(:first-child) {margin-left: 8px }
+
+body{
+    color: #222;
+    background:#fff;
+}
+body.dark-theme {
+    color: #ffffff;
+    background: #1e1f21;
+}
+.dark-theme #boardTable tr:not(:first-child):hover{
+    background-color: brown; cursor: pointer;
+}
+.dark-theme span{color: #4b4b4b; }
+.dark-theme .selected{color: white; font-weight: bold;}
