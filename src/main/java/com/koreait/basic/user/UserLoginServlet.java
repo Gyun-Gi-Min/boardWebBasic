@@ -4,6 +4,7 @@ import com.koreait.basic.Utils;
 import com.koreait.basic.dao.UserDAO;
 import com.koreait.basic.user.model.LoginResult;
 import com.koreait.basic.user.model.UserEntity;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,41 +26,30 @@ public class UserLoginServlet extends HttpServlet {
 
         String uid = req.getParameter("uid");
         String upw = req.getParameter("upw");
-
         UserEntity entity = new UserEntity();
         entity.setUid(uid);
-        entity.setUpw(upw);
 
-        System.out.println(entity);
-        LoginResult lr = UserDAO.login(entity);
+
+        // LoginResult lr = UserDAO.login(entity);
         String err = null;
+        UserEntity loginUser = UserDAO.selUser1(entity);
 
-        switch (lr.getResult()){
-            case 1:
-                //세션에 loginUser값 등록
-                HttpSession hs = req.getSession();
-                hs.setAttribute("loginUser",lr.getLoginUser());
-                //어디론가 이동~
+        if(loginUser == null){ //아이디가 없는 상황
+            err = "아이디를 확인해 주세요.";
+        }else{
+            String dbPw = loginUser.getUpw();
+            if(BCrypt.checkpw(upw,dbPw)){ //비밀번호 일치
+                loginUser.setUpw(null);
+
+                req.getSession().setAttribute("loginUser", loginUser);
                 res.sendRedirect("/board/list");
-                return; //break주니 에러떴음.
-            default:
-                switch (lr.getResult()){
-                    //세션에 loginUSer값들록
-                }
-                    case 0:
-                        err="로그인을 실패";
-                        break;
-                    case 2:
-                        err="아이디를 확인해 주세요";
-                        break;
-
-                    case 3:
-                        err="비민번호를 확인해 주세여";
-                        break;
-
+                return; //없으면 오류남.
+            }else { //비밀번호 불일치
+                err="비민번호를 확인해 주세여";
+            }
         }
-        req.setAttribute("err",err);
-        doGet(req,res);
+          req.setAttribute("err",err);
+          doGet(req,res);
 
 
 

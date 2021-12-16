@@ -19,7 +19,7 @@ public class BoardRankDAO {
         ResultSet rs =null;
         //조회수가 내림차순으로 10개.
         //hits값이 0인건 제외.
-        String sql = " SELECT A.iboard, A.title, A.writer, A.hit , A.rdt, B.nm AS WriterNm" +
+        String sql = " SELECT A.iboard, A.title, A.writer, A.hit , A.rdt, B.nm AS WriterNm, B.profileImg" +
                 " FROM t_board A " +
                 " INNER JOIN t_user B " +
                 " ON A.writer = B.iuser " +
@@ -46,6 +46,7 @@ public class BoardRankDAO {
                         .cnt(cnt)
                         .rdt(rdt)
                         .WriterNm(WriterNm)
+                        .profileImg(rs.getString("profileImg"))
                         .build();
                 list.add(vo);
             }
@@ -63,7 +64,7 @@ public class BoardRankDAO {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs =null;
-        String sql = " SELECT A.iboard, A.title, A.writer, A.rdt, B.nm AS writerNm " +
+        String sql = " SELECT A.iboard, A.title, A.writer, A.rdt, B.nm AS writerNm, B.profileImg " +
                 ", C.cnt " +
                 " FROM t_board A " +
                 " INNER JOIN t_user B" +
@@ -96,6 +97,7 @@ public class BoardRankDAO {
                         .cnt(cnt)
                         .rdt(rdt)
                         .WriterNm(WriterNm)
+                        .profileImg(rs.getString("profileImg"))
                         .build();
                 list.add(vo);
             }
@@ -113,7 +115,7 @@ public class BoardRankDAO {
         PreparedStatement ps = null;
         ResultSet rs =null;
 
-        String sql = " SELECT A.iboard, A.title, A.writer, A.rdt, B.nm AS writerNm " +
+        String sql = " SELECT A.iboard, A.title, A.writer, A.rdt, B.nm AS writerNm, B.profileImg " +
                 ", C.cnt " +
                 " FROM t_board A " +
                 " INNER JOIN t_user B" +
@@ -146,6 +148,7 @@ public class BoardRankDAO {
                         .cnt(cnt)
                         .rdt(rdt)
                         .WriterNm(WriterNm)
+                        .profileImg(rs.getString("profileImg"))
                         .build();
                 list.add(vo);
             }

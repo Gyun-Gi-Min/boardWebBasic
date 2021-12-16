@@ -21,7 +21,7 @@ public class UserDAO {
             ps.setString(2,param.getUpw());
             ps.setString(3,param.getNm());
             ps.setInt(4,param.getGender());
-            ps.executeUpdate();
+            return ps.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -29,6 +29,49 @@ public class UserDAO {
         }
         return 0;
     }
+
+
+
+    // t_user 테이블에서 iuser or uid 유저 정보 가져올 수 있는 메소드
+    public static UserEntity selUser1(UserEntity entity){
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = " SELECT iuser, uid, upw, nm, gender, rdt, profileImg FROM t_user WHERE ";
+
+        if(entity.getIuser()>0){
+            sql += "iuser = " + entity.getIuser();
+        }else{
+            sql += "uid = '" + entity.getUid() + "'";
+        }
+
+        try {
+            con=DbUtils.getCon();
+            ps=con.prepareStatement(sql);
+            rs=ps.executeQuery();
+
+            if(rs.next()){
+                UserEntity vo = new UserEntity();
+                vo.setIuser(rs.getInt("iuser"));
+                vo.setUid(rs.getString("uid"));
+                vo.setUpw(rs.getString("upw"));
+                vo.setNm(rs.getString("nm"));
+                vo.setGender(rs.getInt("gender"));
+                vo.setRdt(rs.getString("rdt"));
+                vo.setProfileImg(rs.getString("profileImg"));
+                return vo;
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DbUtils.close(con,ps,rs);
+        }return null;
+
+
+
+    }
+
 
     //무조건 LoginResult 객체 주소값 리턴
     // result 값 0:실패 1:로그인 성공 2:아이디x 3:비밀버호 틀림
@@ -43,7 +86,6 @@ public class UserDAO {
 
         String sql = "SELECT iuser, upw, nm, gender, profileImg FROM t_user WHERE uid = ?";
         try{
-
                 con =DbUtils.getCon();
                 ps = con.prepareStatement(sql);
                 ps.setString(1, entity.getUid());
@@ -79,7 +121,7 @@ public class UserDAO {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = " SELECT uid, nm, gender, rdt, profileImg FROM t_user WHERE iuser = ? ";
+        String sql = " SELECT uid, upw, nm, gender, rdt, profileImg FROM t_user WHERE iuser = ? ";
 
         try {
             con = DbUtils.getCon();
@@ -89,6 +131,7 @@ public class UserDAO {
             if(rs.next()){
                 UserEntity vo = new UserEntity();
                 vo.setUid(rs.getString("uid"));
+                vo.setUpw(rs.getString("upw"));
                 vo.setNm(rs.getString("nm"));
                 vo.setGender(rs.getInt("gender"));
                 vo.setRdt(rs.getString("rdt"));
@@ -101,36 +144,41 @@ public class UserDAO {
     }
 
 
-
+    //비밀번호 > iuser,upw (암호화가 된) 넘어옴
+    // 프로필 이미지 > iuser , profileImg 넘어옴
     public static int updUser(UserEntity entity){
         Connection con = null;
-        PreparedStatement ps = null;
+        PreparedStatement ps= null;
         String sql = " UPDATE t_user SET ";
-        String changeVal = null;
+        String val = null;
 
-        if(entity.getUpw() != null && !"".equals(entity.getUpw())){
+        if(entity.getUpw() != null && !"".equals(entity.getUpw()) ){
             sql += " upw = ? ";
-            changeVal = entity.getUpw();
+            val = entity.getUpw();
         }else if(entity.getProfileImg() != null && !"".equals(entity.getProfileImg())){
             sql += " profileImg = ? ";
-            changeVal = entity.getProfileImg();
+            val = entity.getProfileImg();
         }
 
         sql += " WHERE iuser = ? ";
 
-        try {
+        try{
             con = DbUtils.getCon();
             ps = con.prepareStatement(sql);
-            ps.setString(1,changeVal);
+            ps.setString(1,val);
             ps.setInt(2,entity.getIuser());
             return ps.executeUpdate();
+
         }catch (Exception e){
             e.printStackTrace();
         }finally {
             DbUtils.close(con,ps);
         }
         return 0;
+
+
     }
+
 
 
 }

@@ -15,5 +15,5 @@ public class UserEntity {
     private String nm;
     private int gender;
     private String rdt;
-    private String profileImg;
+    private String profileImg; //alter써서 추가된거임
 }

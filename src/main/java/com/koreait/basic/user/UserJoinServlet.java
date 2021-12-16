@@ -17,9 +17,7 @@ public class UserJoinServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-        String aa = "가나다라";
-        String aaaa = Utils.replaceAll(aa);
-        System.out.println(aaaa);
+
 
 
 
@@ -46,8 +44,6 @@ public class UserJoinServlet extends HttpServlet {
         System.out.println(entity);
 
         int result = UserDAO.join(entity);
-
-        res.sendRedirect("/user/login");
 
         switch (result){
             case 1:

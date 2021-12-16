@@ -42,26 +42,33 @@ public class UserProfileServlet extends HttpServlet {
         //mkdirs? 로 폴더생성했음
         String targetPath = application.getRealPath("/res/img/profile/" + loginUserPk) ;
         //"" 빈칸을 주면 톰캣에서 돌아가는 프로젝트 root경로값 문자열을 준다.
-
         File targetFolder = new File(targetPath);
         if(targetFolder.exists()){
             FileUtils.delFolderFiles(targetPath,false);
         }else {
             targetFolder.mkdirs(); //폴더 만드는거임.  s 들어간거 쓰면 무적수쥰.
         }
+        System.out.println("targetPath : " + targetPath);
 
         MultipartRequest mr
                 = new MultipartRequest(req,targetPath, maxSize ,"UTF-8",new DefaultFileRenamePolicy());
 
         String changefileNm = mr.getFilesystemName("profileImg");
+        //profile.jsp의 name을 적어야 한다~
 
         UserEntity entity = new UserEntity();
         entity.setIuser(loginUserPk);
         entity.setProfileImg(changefileNm);
+        //알아야할 정보는 어떤 iuser의 img를 바꿀것인가?이므로 두개만 entity에 담으면됨.
 
         int result = UserDAO.updUser(entity);
-        //doGet(req,res);
-        res.sendRedirect("/user/profile");
+        if(result == 1){
+            UserEntity loginUser = Utils.getLoginUser(req);
+            loginUser.setProfileImg(changefileNm);
+        }
+
+        //doGet(req,res); >> 이렇게 하고 업로드한 후 새로고침하면 post 실행됨.
+        res.sendRedirect("/user/profile"); //그래서 마지막에 get방식이 되도록 바꿈.
 
 
     }
