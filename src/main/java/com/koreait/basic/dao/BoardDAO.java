@@ -247,6 +247,7 @@ public class BoardDAO {
 
     }
         public static int delBoard(BoardEntity entity){
+
         Connection con =null;
         PreparedStatement ps = null;
         String sql ="DELETE FROM t_board WHERE iboard=? AND writer=? ";
@@ -257,6 +258,7 @@ public class BoardDAO {
             ps.setInt(1,entity.getIboard());
             ps.setInt(2,entity.getWriter());
             return ps.executeUpdate();
+
         }catch (Exception e){
             e.printStackTrace();
         }finally {

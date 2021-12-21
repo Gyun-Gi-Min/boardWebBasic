@@ -38,7 +38,7 @@
     </c:if>
 
     <div>
-
+    <%--여기에 javascript 배운걸 활용하여 리스트 뿌려줄것.--%>
         <table>
 
             <tr>

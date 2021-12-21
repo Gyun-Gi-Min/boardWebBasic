@@ -40,7 +40,7 @@ public class UserLoginServlet extends HttpServlet {
             String dbPw = loginUser.getUpw();
             if(BCrypt.checkpw(upw,dbPw)){ //비밀번호 일치
                 loginUser.setUpw(null);
-
+                //loginuser를 sessionscope에 저장해둠.
                 req.getSession().setAttribute("loginUser", loginUser);
                 res.sendRedirect("/board/list");
                 return; //없으면 오류남.
